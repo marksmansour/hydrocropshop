@@ -31,7 +31,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "Categories",
+        "title": "<strong>Categories</strong>",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 6,
