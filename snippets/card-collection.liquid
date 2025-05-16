@@ -74,6 +74,9 @@
               class="motion-reduce"
             >
           </div>
+          <span class="badge" style="position: absolute; bottom: 0; left: 0; z-index: 1; background-color: #3a8a41; color: #fff; border-color: transparent;">
+            {{- card_collection.title | escape -}}
+          </span>
         </div>
       {%- endif -%}
       {%- if card_collection == blank -%}
@@ -118,7 +121,7 @@
     </div>
     {%- if card_collection != blank and card_style == 'card' or card_collection.featured_image -%}
       <div class="card__content">
-        <div class="card__information">
+        {% comment %} <div class="card__information">
           <h3 class="card__heading">
             <a
               {% if card_collection == blank %}
@@ -148,7 +151,7 @@
               </span>
             </p>
           {%- endif -%}
-        </div>
+        </div> {% endcomment %}
       </div>
     {%- endif -%}
     {%- if card_collection == blank -%}
