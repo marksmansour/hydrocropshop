@@ -34,7 +34,7 @@
         "title": "<strong>Categories</strong>",
         "heading_size": "h2",
         "image_ratio": "square",
-        "columns_desktop": 6,
+        "columns_desktop": 4,
         "color_scheme": "scheme-1",
         "show_view_all": false,
         "columns_mobile": "2",
