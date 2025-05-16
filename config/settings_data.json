@@ -105,6 +105,7 @@
     "badge_corner_radius": 40,
     "sale_badge_color_scheme": "scheme-5",
     "sold_out_badge_color_scheme": "scheme-3",
+    "brand_image": "shopify://shop_images/logo_1a2c41ae-36a0-43f3-b069-e91770c96ecc.png",
     "social_facebook_link": "",
     "social_instagram_link": "",
     "social_youtube_link": "",
@@ -184,12 +185,23 @@
       },
       "scheme-5": {
         "settings": {
-          "background": "#334fb4",
+          "background": "#1d1d1d",
           "background_gradient": "",
           "text": "#ffffff",
           "button": "#ffffff",
-          "button_label": "#334fb4",
+          "button_label": "#1d1d1d",
           "secondary_button_label": "#ffffff",
+          "shadow": "#121212"
+        }
+      },
+      "scheme-46a6c894-1a02-453f-894c-8a9e25490e8e": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "text": "#121212",
+          "button": "#121212",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#121212",
           "shadow": "#121212"
         }
       }
