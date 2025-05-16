@@ -11,36 +11,12 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "newsletter_fjBfEe": {
-      "type": "newsletter",
-      "blocks": {
-        "heading_9AzDy7": {
-          "type": "heading",
-          "settings": {
-            "heading": "Subscribe to our emails",
-            "heading_size": "h1"
-          }
-        },
-        "paragraph_zFCHWH": {
-          "type": "paragraph",
-          "settings": {
-            "text": "<p>Be the first to know about new collections and exclusive offers.</p>"
-          }
-        },
-        "email_form_PfTPB9": {
-          "type": "email_form",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "heading_9AzDy7",
-        "paragraph_zFCHWH",
-        "email_form_PfTPB9"
-      ],
-      "name": "t:sections.newsletter.presets.name",
+    "custom_liquid_wAiABJ": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "color_scheme": "scheme-5",
-        "full_width": true,
+        "custom_liquid": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2481.658749600546!2d-0.2887312873333478!3d51.53781860836255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487613a8a14b14ad%3A0x888400091cb5dbe!2sHydro%20Crop%20Shop%20-%20Hydroponics%20Store!5e0!3m2!1sen!2suk!4v1747399387301!5m2!1sen!2suk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+        "color_scheme": "",
         "padding_top": 40,
         "padding_bottom": 52
       }
@@ -92,7 +68,7 @@
     }
   },
   "order": [
-    "newsletter_fjBfEe",
+    "custom_liquid_wAiABJ",
     "footer"
   ]
 }
