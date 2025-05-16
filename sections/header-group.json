@@ -17,13 +17,37 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "FREE SHIPPING ON ORDERS OVER £45•NEXT DAY DELIVERY•SAFE AND SECURE•PRICE MATCH GUARANTEE",
+            "text": "FREE SHIPPING ON ORDERS OVER £45",
+            "link": ""
+          }
+        },
+        "announcement_xx8xMh": {
+          "type": "announcement",
+          "settings": {
+            "text": "NEXT DAY DELIVERY",
+            "link": ""
+          }
+        },
+        "announcement_PRhUJp": {
+          "type": "announcement",
+          "settings": {
+            "text": "SAFE AND SECURE",
+            "link": ""
+          }
+        },
+        "announcement_YykDAQ": {
+          "type": "announcement",
+          "settings": {
+            "text": "PRICE MATCH GUARANTEE",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "announcement_xx8xMh",
+        "announcement_PRhUJp",
+        "announcement_YykDAQ"
       ],
       "settings": {
         "color_scheme": "scheme-3",
