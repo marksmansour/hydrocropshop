@@ -47,7 +47,7 @@
       "type": "featured-collection",
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "title": "<strong>Featured collection</strong>",
+        "title": "<strong>{{ section.settings.collection.title }}</strong>",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
