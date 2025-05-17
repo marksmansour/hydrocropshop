@@ -43,21 +43,6 @@
         "padding_bottom": 36
       }
     },
-    "tag_list_NQYcjg": {
-      "type": "tag-list",
-      "name": "t:sections.tag-list.presets.name",
-      "settings": {
-        "title": "Browse by Tag",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "featured_collection_b8tWdd": {
       "type": "featured-collection",
       "name": "t:sections.featured-collection.presets.name",
@@ -90,7 +75,6 @@
   },
   "order": [
     "collection_list_k8T7Ld",
-    "tag_list_NQYcjg",
     "featured_collection_b8tWdd"
   ]
 }
