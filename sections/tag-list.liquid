@@ -1,0 +1,294 @@
+{{ 'section-collection-list.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign columns_mobile_int = section.settings.columns_mobile | plus: 0
+  assign show_mobile_slider = false
+
+  assign current_collection_tags = ''
+  if collection and collection.all_tags.size > 0
+    assign current_collection_tags = collection.all_tags
+    if section.settings.swipe_on_mobile and current_collection_tags.size > columns_mobile_int
+      assign show_mobile_slider = true
+    endif
+  endif
+-%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="collection-list-wrapper page-width isolate{% if show_mobile_slider %} page-width-desktop{% endif %}{% if section.settings.title == blank %} no-heading{% endif %} section-{{ section.id }}-padding">
+    {%- unless section.settings.title == blank -%}
+      <div class="title-wrapper-with-link{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% else %} title-wrapper--self-padded-mobile{% endif %} title-wrapper--no-top-margin">
+        <h2
+          id="SectionHeading-{{ section.id }}"
+          class="collection-list-title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        >
+          {{ section.settings.title }}
+        </h2>
+      </div>
+    {%- endunless -%}
+
+    {%- if collection and current_collection_tags.size > 0 -%}
+      <slider-component class="slider-mobile-gutter{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <ul
+          class="collection-list contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down{% if show_mobile_slider %} slider slider--tablet grid--peek{% endif %} collection-list--{{ current_collection_tags.size }}-items"
+          id="Slider-{{ section.id }}"
+          role="list"
+        >
+          {%- for tag in current_collection_tags -%}
+            {%- liquid
+              assign product_for_image = nil
+              assign tag_image = nil
+              for product_item in collection.products
+                if product_item.tags contains tag
+                  if product_item.featured_image != blank
+                    assign product_for_image = product_item
+                    assign tag_image = product_item.featured_image
+                    break
+                  elsif product_for_image == nil
+                    assign product_for_image = product_item 
+                  endif
+                endif
+              endfor
+              assign handled_tag = tag | handleize
+              assign tag_url = collection.url | append: '/' | append: handled_tag
+            -%}
+            <li
+              id="Slide-{{ section.id }}-{{ forloop.index }}"
+              class="collection-list__item grid__item{% if show_mobile_slider %} slider__slide{% endif %}{% if tag_image == nil %} collection-list__item--no-media{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              {% if settings.animations_reveal_on_scroll %}
+                data-cascade
+                style="--animation-order: {{ forloop.index }};"
+              {% endif %}
+            >
+              <div class="card-wrapper card--media">
+                <div class="card card--standard card--collection">
+                  <a href="{{ tag_url }}" class="full-unstyled-link" aria-label="{{ tag | escape }}">
+                    <div class="card__media-full-width card__media-full-width--{{ section.settings.image_ratio }}">
+                      <div class="media media--{{ section.settings.image_ratio }} media--hover-effect"
+                        {% if section.settings.image_ratio == 'adapt' and tag_image %} style="padding-bottom: {{ 1 | divided_by: tag_image.aspect_ratio | times: 100 }}%;"{% endif %}>
+                        {%- if tag_image -%}
+                          <img srcset="{%- if tag_image.width >= 165 -%}{{ tag_image | image_url: width: 165 }} 165w,{%- endif -%}
+                                       {%- if tag_image.width >= 375 -%}{{ tag_image | image_url: width: 375 }} 375w,{%- endif -%}
+                                       {%- if tag_image.width >= 550 -%}{{ tag_image | image_url: width: 550 }} 550w,{%- endif -%}
+                                       {%- if tag_image.width >= 750 -%}{{ tag_image | image_url: width: 750 }} 750w,{%- endif -%}
+                                       {%- if tag_image.width >= 1100 -%}{{ tag_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                                       {%- if tag_image.width >= 1500 -%}{{ tag_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                                       {{ tag_image | image_url }} {{ tag_image.width }}w"
+                               src="{{ tag_image | image_url: width: 750 }}"
+                               sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: section.settings.columns_desktop }}px, (min-width: 750px) calc((100vw - 10rem) / {{ section.settings.columns_desktop }}), calc((100vw - 4rem) / {{ section.settings.columns_mobile }})"
+                               alt="{{ tag | escape }}"
+                               loading="lazy"
+                               width="{{ tag_image.width }}"
+                               height="{{ tag_image.height }}"
+                               class="motion-reduce">
+                        {%- else -%}
+                          {%- liquid
+                            assign placeholder_image_index = forloop.index0 | modulo: 4 | plus: 1
+                            assign placeholder_svg = 'collection-apparel-' | append: placeholder_image_index
+                          -%}
+                          {{ placeholder_svg | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                      </div>
+                    </div>
+                    <div class="card-information">
+                      <h3 class="card-information__text h5">{{ tag }}</h3>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        {%- if show_mobile_slider -%}
+          <div class="slider-buttons">
+            <button
+              type="button"
+              class="slider-button slider-button--prev"
+              name="previous"
+              aria-label="{{ 'general.slider.previous_slide' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </button>
+            <div class="slider-counter caption">
+              <span class="slider-counter--current">1</span>
+              <span aria-hidden="true"> / </span>
+              <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+              <span class="slider-counter--total">{{ current_collection_tags.size }}</span>
+            </div>
+            <button
+              type="button"
+              class="slider-button slider-button--next"
+              name="next"
+              aria-label="{{ 'general.slider.next_slide' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-caret.svg' | inline_asset_content -}}
+              </span>
+            </button>
+          </div>
+        {%- endif -%}
+      </slider-component>
+    {%- else -%}
+      <div class="center" style="padding: 20px 0;">
+        {%- if collection == blank or collection == nil -%}
+          <p>This section should be used on a collection page</p>
+        {%- else -%}
+          <p>No tags found in the collection '{{ collection.title }}'</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.tag_list.name",
+  "tag": "section",
+  "class": "section section-tag-list",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "title",
+      "default": "Browse by Tag",
+      "label": "t:sections.tag_list.settings.title.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "t:sections.all.heading_size.options__1.label"
+        },
+        {
+          "value": "h1",
+          "label": "t:sections.all.heading_size.options__2.label"
+        },
+        {
+          "value": "h0",
+          "label": "t:sections.all.heading_size.options__3.label"
+        },
+        {
+          "value": "hxl",
+          "label": "t:sections.all.heading_size.options__4.label"
+        },
+        {
+          "value": "hxxl",
+          "label": "t:sections.all.heading_size.options__5.label"
+        }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.collection_list.settings.image_ratio.options__1.label" 
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.collection_list.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.collection_list.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "square",
+      "label": "t:sections.collection_list.settings.image_ratio.label",
+      "info": "t:sections.collection_list.settings.image_ratio.info"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "t:sections.collection_list.settings.columns_desktop.label"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collection_list.settings.header_mobile.content"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.collection_list.settings.columns_mobile.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.collection_list.settings.columns_mobile.options__2.label"
+        }
+      ],
+      "default": "1",
+      "label": "t:sections.collection_list.settings.columns_mobile.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "swipe_on_mobile",
+      "default": false,
+      "label": "t:sections.collection_list.settings.swipe_on_mobile.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.tag_list.presets.name"
+    }
+  ]
+}
+{% endschema %}
