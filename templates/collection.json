@@ -21,7 +21,7 @@
       "type": "tag-list",
       "name": "t:sections.tag-list.presets.name",
       "settings": {
-        "title": "",
+        "title": "Tags here",
         "heading_size": "h1",
         "image_ratio": "square",
         "columns_desktop": 3,
