@@ -103,6 +103,10 @@
       assign is_main_collection = false
     endif
   endif
+
+  # Ensure we have the correct columns - 4 for desktop, 2 for mobile
+  assign columns_desktop = section.settings.columns_desktop | default: 4
+  assign columns_mobile = section.settings.columns_mobile | default: '2'
 -%}
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
@@ -116,7 +120,7 @@
     {%- endunless -%}
 
     {%- if current_collection and current_collection.all_tags.size > 0 and is_main_collection -%}
-      <ul class="grid grid--{{ section.settings.columns_desktop }}-col-desktop grid--{{ section.settings.columns_mobile }}-col-tablet-down contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %}">
+      <ul class="grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %}">
         {%- for tag in current_collection.all_tags -%}
           {%- liquid
             assign product_for_image = nil
@@ -185,8 +189,8 @@
                           "
                           src="{{ tag_image | image_url: width: 1500 }}"
                           sizes="
-                            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: section.settings.columns_desktop }}px,
-                            (min-width: 750px) calc((100vw - 10rem) / {{ section.settings.columns_desktop }}),
+                            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: columns_desktop }}px,
+                            (min-width: 750px) calc((100vw - 10rem) / {{ columns_desktop }}),
                             calc(100vw - 3rem)
                           "
                           alt="{{ tag | escape }}"
