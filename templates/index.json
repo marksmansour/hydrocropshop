@@ -31,7 +31,7 @@
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
-        "title": "<strong>Categories</strong>",
+        "title": "Categories",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 4,
@@ -47,7 +47,7 @@
       "type": "featured-collection",
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
-        "title": "<strong>{{ section.settings.collection.title }}</strong>",
+        "title": "{{ section.settings.collection.title }}",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
