@@ -17,7 +17,7 @@
         "color_scheme": "scheme-2"
       }
     },
-    "tag_list_GaxiH8": {
+    "tag_list_yBRCzj": {
       "type": "tag-list",
       "name": "t:sections.tag-list.presets.name",
       "settings": {
@@ -28,6 +28,76 @@
         "color_scheme": "",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_product_NtgNQD": {
+      "type": "featured-product",
+      "blocks": {
+        "text_AHWDrF": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_wmQm4C": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_wwMLCQ": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_wWcr7P": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_BtxLJa": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_GVwQGj": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_9Kw8bb": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_AHWDrF",
+        "title_wmQm4C",
+        "price_wwMLCQ",
+        "variant_picker_wWcr7P",
+        "quantity_selector_BtxLJa",
+        "buy_buttons_GVwQGj",
+        "share_9Kw8bb"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -70,7 +140,8 @@
   },
   "order": [
     "banner",
-    "tag_list_GaxiH8",
+    "tag_list_yBRCzj",
+    "featured_product_NtgNQD",
     "product-grid",
     "tag_list_WQUxck"
   ]
