@@ -121,7 +121,7 @@
     </div>
     {%- if card_collection != blank and card_style == 'card' or card_collection.featured_image -%}
       <div class="card__content">
-        {% comment %} <div class="card__information">
+        <div class="">
           <h3 class="card__heading">
             <a
               {% if card_collection == blank %}
@@ -131,7 +131,7 @@
               {% endif %}
               class="full-unstyled-link"
             >
-              {%- if card_collection.title != blank -%}
+              {% comment %} {%- if card_collection.title != blank -%}
                 {{- card_collection.title | escape -}}
               {%- else -%}
                 {{ 'onboarding.collection_title' | t }}
@@ -140,7 +140,7 @@
                 <span class="icon-wrap">
                   {{- 'icon-arrow.svg' | inline_asset_content -}}
                 </span>
-              {%- endif %}
+              {%- endif %} {% endcomment %}
             </a>
           </h3>
           {%- if card_collection.featured_image == null and card_collection.description != blank -%}
@@ -151,7 +151,7 @@
               </span>
             </p>
           {%- endif -%}
-        </div> {% endcomment %}
+        </div>
       </div>
     {%- endif -%}
     {%- if card_collection == blank -%}
