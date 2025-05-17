@@ -30,6 +30,30 @@
       aria-modal="true"
       aria-label="{{ 'general.search.search' | t }}"
     >
+      <style>
+        .search-modal__content .search-modal__form { /* Target the form within the modal content */
+          width: 100%;
+          max-width: 500px; /* Example: constrain width if needed */
+          margin: 0 auto; /* Center the form block if it's narrower than content area */
+        }
+        .search-modal__form .search__input {
+          /* text-align: center !important; */ /* Removed as per user feedback - vertical centering is key */
+          /* Vertical centering is usually handled by input padding, line-height, or flex properties on parent */
+        }
+        /* Ensure the content area itself is set up for centering if not already */
+        /* .search-modal__content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        } */
+        /* The close button is usually absolutely positioned, ensure it remains so */
+         .search-modal__close-button {
+            position: absolute;
+            top: 1.5rem; /* Adjust as per original design */
+            right: 1.5rem; /* Adjust as per original design */
+        }
+      </style>
       <div class="modal-overlay"></div>
       <div
         class="search-modal__content{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} search-modal__content-top{% else %} search-modal__content-bottom{% endif %}"
