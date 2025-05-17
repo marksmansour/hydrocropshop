@@ -328,6 +328,9 @@
     "collection_list": {
       "view_all": "View all"
     },
+    "tag_list": {
+      "view_all": "View all"
+    },
     "collection_template": {
       "empty": "No products found",
       "title": "Collection",
