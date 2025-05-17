@@ -21,6 +21,15 @@
   {% render 'card-product', show_vendor: section.settings.show_vendor %}
 {% endcomment %}
 {%- unless skip_styles -%}
+  <style>
+    .price-badge .price,
+    .price-badge .price-item,
+    .price-badge .price__sale,
+    .price-badge .price__regular,
+    .price-badge s {
+      color: #fff !important;
+    }
+  </style>
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-volume-pricing.css' | asset_url | stylesheet_tag }}
 
@@ -204,7 +213,7 @@
               </p>
             {%- endif -%}
 
-            {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+            {% render 'price-badge', product: card_product, price_class: '', show_compare_at_price: true %}
             {%- if card_product.quantity_price_breaks_configured? -%}
               {% if card_product.variants.size == 1 and quick_add == 'bulk' %}
                 {% liquid
@@ -512,7 +521,7 @@
                         <a href="{{ card_product.url }}" class="full-unstyled-link">
                           <h3>{{ card_product.title | escape }}</h3>
                         </a>
-                        {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+                        {% render 'price-badge', product: card_product, price_class: '', show_compare_at_price: true %}
                         {%- if card_product.quantity_price_breaks_configured? -%}
                           <div class="card__information-volume-pricing-note">
                             <span class="caption">{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -527,7 +536,7 @@
                             {{ card_product.title | escape }}
                           </h3>
                         </a>
-                        {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+                        {% render 'price-badge', product: card_product, price_class: '', show_compare_at_price: true %}
                         {%- if card_product.quantity_price_breaks_configured? -%}
                           <div class="card__information-volume-pricing-note">
                             <span class="caption">{{ 'products.product.volume_pricing.note' | t }}</span>
@@ -615,7 +624,7 @@
               <span class="visually-hidden">{{ 'accessibility.vendor' | t }}</span>
               <div class="caption-with-letter-spacing light">{{ 'products.product.vendor' | t }}</div>
             {%- endif -%}
-            {% render 'price', placeholder: placeholder, show_compare_at_price: true %}
+            {% render 'price-badge', placeholder: placeholder, show_compare_at_price: true %}
           </div>
         </div>
       </div>
