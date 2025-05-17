@@ -19,7 +19,6 @@
     },
     "tag_list_yBRCzj": {
       "type": "tag-list",
-      "disabled": true,
       "name": "t:sections.tag-list.presets.name",
       "settings": {
         "title": "",
