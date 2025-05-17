@@ -19,6 +19,7 @@
     },
     "tag_list_yBRCzj": {
       "type": "tag-list",
+      "disabled": true,
       "name": "t:sections.tag-list.presets.name",
       "settings": {
         "title": "",
@@ -34,7 +35,6 @@
     },
     "product-grid": {
       "type": "main-collection-product-grid",
-      "disabled": true,
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 4,
