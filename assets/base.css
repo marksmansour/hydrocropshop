@@ -3681,3 +3681,7 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+.text-center {
+  text-align: center;
+}
