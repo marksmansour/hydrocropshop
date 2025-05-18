@@ -71,10 +71,59 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "image_with_text_rR4RDF": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_KaiCjM": {
+          "type": "heading",
+          "settings": {
+            "heading": "Visit Our Wembley  Store",
+            "heading_size": "h1"
+          }
+        },
+        "text_6EX9yC": {
+          "type": "text",
+          "settings": {
+            "text": "<p>“Connect with our knowledgeable team for expert advice tailored to your needs.</p><p>Browse our full product selection in person, adjust your existing order, or complete your purchase with cash.</p><p>Our store offers a hands-on shopping experience where you can see, touch, and explore before you buy.</p>",
+            "text_style": "body"
+          }
+        },
+        "button_D3Q7zG": {
+          "type": "button",
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_KaiCjM",
+        "text_6EX9yC",
+        "button_D3Q7zG"
+      ],
+      "name": "t:sections.image-with-text.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+        "height": "small",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "top",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "section_color_scheme": "",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "collection_list_k8T7Ld",
-    "featured_collection_b8tWdd"
+    "featured_collection_b8tWdd",
+    "image_with_text_rR4RDF"
   ]
 }
