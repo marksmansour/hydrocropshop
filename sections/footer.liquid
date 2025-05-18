@@ -177,7 +177,7 @@
   }
 {%- endstyle -%}
 
-<div class="footer__top-section">
+<div class="footer__top-section"{% if request.page_type == 'page' and request.path == '/pages/contact' %} style="display: none;"{% endif %}>
   <div class="footer__top-inner">
     <div class="footer__top-col footer__top-map">
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2481.658749600546!2d-0.2887312873333478!3d51.53781860836255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487613a8a14b14ad%3A0x888400091cb5dbe!2sHydro%20Crop%20Shop%20-%20Hydroponics%20Store!5e0!3m2!1sen!2suk!4v1747399387301!5m2!1sen!2suk" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -197,7 +197,7 @@
           </div>
           <div class="footer-contact-col">
             <div class="footer-contact-phone">020 3488 0419</div>
-            <div class="footer-contact-phone">07507 883 374</div>
+            <div class="footer-contact-phone">+44 7440 524620</div>
             <div class="footer-contact-email">sales@hydrocropshop.co.uk</div>
           </div>
         </div>
