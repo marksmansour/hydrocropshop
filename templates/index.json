@@ -21,13 +21,76 @@
         "featured_collection_BAakxM": {
           "type": "featured_collection",
           "settings": {
-            "collection": "grow-tents"
+            "collection": "grow-tents-sheeting"
+          }
+        },
+        "featured_collection_NMnRg3": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "fan-filters-environment"
+          }
+        },
+        "featured_collection_DjmMJt": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "grow-kits"
+          }
+        },
+        "featured_collection_wTtJRY": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "growing-medium"
+          }
+        },
+        "featured_collection_6cFDUg": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "tools-accessories"
+          }
+        },
+        "featured_collection_c7fFqx": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "nutrients-boosters"
+          }
+        },
+        "featured_collection_jBxH89": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "hydroponics-systems"
+          }
+        },
+        "featured_collection_eer8iQ": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "pots-trays-irrigation"
+          }
+        },
+        "featured_collection_tRftCm": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "propagation"
+          }
+        },
+        "featured_collection_DY49WL": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "plant-health"
           }
         }
       },
       "block_order": [
         "featured_collection_J3xyRK",
-        "featured_collection_BAakxM"
+        "featured_collection_BAakxM",
+        "featured_collection_NMnRg3",
+        "featured_collection_DjmMJt",
+        "featured_collection_wTtJRY",
+        "featured_collection_6cFDUg",
+        "featured_collection_c7fFqx",
+        "featured_collection_jBxH89",
+        "featured_collection_eer8iQ",
+        "featured_collection_tRftCm",
+        "featured_collection_DY49WL"
       ],
       "name": "t:sections.collection-list.presets.name",
       "settings": {
@@ -105,7 +168,7 @@
       ],
       "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+        "image": "shopify://shop_images/silhouetted-couples-look-out-at-a-city-at-night.jpg",
         "height": "small",
         "desktop_image_width": "medium",
         "layout": "text_first",
