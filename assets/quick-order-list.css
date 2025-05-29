@@ -75,7 +75,7 @@ quick-order-list .quantity__button {
 .quick-order-list__table th {
   text-align: left;
   padding-bottom: 2rem;
-  opacity: 0.85;
+  opacity: 0.95;
   font-weight: normal;
   font-size: 1.1rem;
 }
