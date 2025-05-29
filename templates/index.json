@@ -92,7 +92,6 @@
         "featured_collection_tRftCm",
         "featured_collection_DY49WL"
       ],
-      "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Categories",
         "heading_size": "h2",
@@ -108,7 +107,6 @@
     },
     "featured_collection_b8tWdd": {
       "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "title": "{{ section.settings.collection.title }}",
         "heading_size": "h2",
@@ -166,9 +164,8 @@
         "text_6EX9yC",
         "button_D3Q7zG"
       ],
-      "name": "t:sections.image-with-text.presets.name",
       "settings": {
-        "image": "shopify://shop_images/silhouetted-couples-look-out-at-a-city-at-night.jpg",
+        "image": "shopify://shop_images/b5e23d55-68ff-4cfe-99c5-6bbf877f3e00.jpg",
         "height": "small",
         "desktop_image_width": "medium",
         "layout": "text_first",
