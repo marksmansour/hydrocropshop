@@ -313,6 +313,8 @@ h1,
 h2,
 .h2 {
   font-size: calc(var(--font-heading-scale) * 2rem);
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 @media only screen and (min-width: 750px) {
@@ -3721,4 +3723,33 @@ details-disclosure > details {
   color: rgba(var(--color-foreground), 0.7);
   padding: 0 8px;
   line-height: 36px;
+}
+
+@media screen and (max-width: 749px) {
+  .announcement-bar {
+    width: 100%; 
+    box-sizing: border-box;
+    overflow-x: hidden; /* This clips the 100vw child to the bar's bounds */
+  }
+  .announcement-bar__announcements {
+    width: 100vw; 
+    overflow-x: auto; 
+    box-sizing: border-box;
+    /* Counteract the 3rem padding from .utility-bar__grid.page-width */
+    margin-left: -3rem; 
+    margin-right: -3rem;
+    /* Restore the 3rem space internally + add 12px buffer */
+    padding-left: calc(3rem + 12px); 
+    padding-right: calc(3rem + 12px);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; 
+    justify-content: flex-start !important; /* Override default centering for mobile scroll */
+  }
+  .announcement-bar__announcements::-webkit-scrollbar {
+    display: none; 
+  }
+}
+
+.menu-drawer {
+  text-transform: uppercase;
 }
