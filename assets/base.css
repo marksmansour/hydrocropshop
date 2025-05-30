@@ -2836,6 +2836,8 @@ details[open] > .header__submenu {
   padding: 1.2rem;
   text-decoration: none;
   color: rgba(var(--color-foreground), 0.9);
+  text-transform: uppercase;
+  font-weight: 500 !important;
 }
 
 .header__menu-item:hover {
@@ -2846,19 +2848,6 @@ details[open] > .header__submenu {
   transition: text-decoration var(--duration-short) ease;
 }
 
-.header__menu-item:hover span {
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
-}
-
-details[open] > .header__menu-item {
-  text-decoration: underline;
-}
-
-details[open]:hover > .header__menu-item {
-  text-decoration-thickness: 0.2rem;
-}
-
 details[open] > .header__menu-item .icon-caret {
   transform: rotate(180deg);
 }
@@ -2866,12 +2855,6 @@ details[open] > .header__menu-item .icon-caret {
 .header__active-menu-item {
   transition: text-decoration-thickness var(--duration-short) ease;
   color: rgb(var(--color-foreground));
-  text-decoration: underline;
-  text-underline-offset: 0.3rem;
-}
-
-.header__menu-item:hover .header__active-menu-item {
-  text-decoration-thickness: 0.2rem;
 }
 
 .header__submenu {
@@ -3686,4 +3669,56 @@ details-disclosure > details {
 
 .text-center {
   text-align: center;
+}
+
+.announcement-bar__separator {
+  font-size: 20px;
+  font-weight: 900;
+  color: rgba(var(--color-foreground), 0.7);
+  padding: 0 8px;
+  line-height: 36px;
+}
+
+.announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  height: 36px;
+  width: 100%;
+  background: inherit;
+  box-sizing: border-box;
+}
+
+.announcement-bar__announcements {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.announcement-bar__announcement {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.announcement-bar__message {
+  font-size: 11px;
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.1rem;
+  line-height: 36px;
+  white-space: nowrap;
+}
+
+.announcement-bar__separator {
+  font-size: 20px;
+  font-weight: 900;
+  color: rgba(var(--color-foreground), 0.7);
+  padding: 0 8px;
+  line-height: 36px;
 }
