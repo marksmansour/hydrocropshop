@@ -3753,3 +3753,9 @@ details-disclosure > details {
 .menu-drawer {
   text-transform: uppercase;
 }
+
+@media screen and (max-width: 749px) {
+  .page-width-banner {
+    padding: 0!important;
+  }
+}

@@ -14,7 +14,16 @@
     <div class="collection-hero__text-wrapper">
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
+        {%- if request.path contains '/collections/' -%}
+          {%- assign path_parts = request.path | split: '/' -%}
+          {%- if path_parts.size > 3 -%}
+            {{- path_parts[2] | replace: '-', ' ' | capitalize }} - {{ path_parts[3] | replace: '-', ' ' | capitalize -}}
+          {%- else -%}
+            {{- collection.title | escape -}}
+          {%- endif -%}
+        {%- else -%}
+          {{- collection.title | escape -}}
+        {%- endif -%}
       </h1>
 
       {%- if section.settings.show_collection_description -%}
