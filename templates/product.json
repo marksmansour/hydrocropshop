@@ -82,6 +82,29 @@
         "padding_bottom": 12
       }
     },
+    "rich_text_cJBpnX": {
+      "type": "rich-text",
+      "blocks": {
+        "text_FtDwfG": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Important Notice:</strong> While we make every effort to meet delivery timeframes, product availability and factors outside our control may cause delays. We will contact you immediately after your order if there are any delays or issues with shipping. There may be weight surcharges on some items, we will charge you exactly what it costs us to delivery the items to you and never aim to profit from delivery costs.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_FtDwfG"
+      ],
+      "name": "t:sections.rich-text.presets.name",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "related-products": {
       "type": "related-products",
       "settings": {
@@ -103,6 +126,7 @@
   },
   "order": [
     "main",
+    "rich_text_cJBpnX",
     "related-products"
   ]
 }
