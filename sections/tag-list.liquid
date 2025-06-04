@@ -200,7 +200,7 @@
                           class="motion-reduce"
                         >
                       </div>
-                      <span class="badge" style="position: absolute; bottom: 0; left: 20%; right: 20%; z-index: 1; background-color: #008d37; color: #fff; border-color: transparent;text-transform: uppercase; font-size: 1.5rem; font-weight: 700;">
+                      <span class="badge card-badge">
                         {{- tag | escape -}}
                       </span>
                     </div>
@@ -211,7 +211,7 @@
                         assign placeholder_image = 'collection-' | append: placeholder_image_index
                       -%}
                       {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
-                      <span class="badge" style="position: absolute; bottom: 0; left: 20%; right: 20%; z-index: 1; background-color: #008d37; color: #fff; border-color: transparent;text-transform: uppercase;font-size: 1.5rem; font-weight: 700;">
+                      <span class="badge card-badge">
                         {{- tag | escape -}}
                       </span>
                     </div>

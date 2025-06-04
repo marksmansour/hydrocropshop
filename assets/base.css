@@ -3754,8 +3754,50 @@ details-disclosure > details {
   text-transform: uppercase;
 }
 
+.page-width-banner {
+  margin-top: 2.5rem;
+}
+
 @media screen and (max-width: 749px) {
   .page-width-banner {
     padding: 0!important;
+    margin-top: 0!important;
+  }
+}
+
+.card-badge {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  z-index: 1;
+  background-color: #008d37;
+  color: #fff;
+  border-color: transparent;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 749px) {
+  .card-badge {
+    left: 0;
+    right: 0;
+  }
+}
+
+.header__contact-phone {
+  text-decoration: none!important;
+  color: #fff!important;
+}
+
+@media screen and (max-width: 980px) {
+  .announcement-bar__announcements .announcement-bar__announcement:first-child .announcement-bar__message span {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+    display: inline-block;
+    vertical-align: middle;
   }
 }
