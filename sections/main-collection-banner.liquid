@@ -17,7 +17,7 @@
         {%- if request.path contains '/collections/' -%}
           {%- assign path_parts = request.path | split: '/' -%}
           {%- if path_parts.size > 3 -%}
-            {{- path_parts[2] | replace: '-', ' ' | capitalize }} > {{ path_parts[3] | replace: '-', ' ' | capitalize -}}
+            <a href="/collections/{{ path_parts[2] }}">{{ path_parts[2] | replace: '-', ' ' | capitalize }}</a> > {{ path_parts[3] | replace: '-', ' ' | capitalize -}}
           {%- else -%}
             {{- collection.title | escape -}}
           {%- endif -%}
