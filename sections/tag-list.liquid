@@ -120,130 +120,148 @@
     {%- endunless -%}
 
     {%- if current_collection and current_collection.all_tags.size > 0 and is_main_collection -%}
-      <ul class="grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %}">
-        {%- for tag in current_collection.all_tags -%}
-          {%- liquid
-            assign product_for_image = nil
-            assign tag_image = nil
-            
-            # Use simple first-product-with-tag approach
-            for product_item in current_collection.products
-              if product_item.tags contains tag
-                if product_item.featured_image != blank
-                  assign product_for_image = product_item
-                  assign tag_image = product_item.featured_image
-                  break
-                elsif product_for_image == nil
-                  assign product_for_image = product_item 
+      {% paginate current_collection.products by 1000 %}
+        {%- assign all_products = current_collection.products -%}
+        <ul class="grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %}">
+          {%- for tag in current_collection.all_tags -%}
+            {%- liquid
+              assign product_for_image = nil
+              assign tag_image = nil
+              
+              for product_item in all_products
+                if product_item.tags contains tag
+                  # Try featured image first
+                  if product_item.featured_image != blank
+                    assign product_for_image = product_item
+                    assign tag_image = product_item.featured_image
+                    break
+                  # If no featured image, try any other image from the product
+                  elsif product_item.images.size > 0
+                    assign product_for_image = product_item
+                    assign tag_image = product_item.images.first
+                    break
+                  elsif product_for_image == nil
+                    assign product_for_image = product_item 
+                  endif
                 endif
+              endfor
+              
+              if tag_image == nil
+                assign tag_image = 'https://hydrocropshop.co.uk/cdn/shop/files/FinalLogo-01-medium_landscape_e99f85f4-7e7c-4012-a646-7630259c4e4c.png'
               endif
-            endfor
-            
-            assign handled_tag = tag | handleize
-            assign tag_url = current_collection.url | append: '/' | append: handled_tag
-            
-            assign ratio = 1
-            if tag_image and section.settings.image_ratio == 'portrait'
-              assign ratio = 0.8
-            elsif tag_image and section.settings.image_ratio == 'adapt'
-              assign ratio = tag_image.aspect_ratio
-            endif
-            if ratio == 0 or ratio == null
+              
+              assign handled_tag = tag | handleize
+              assign tag_url = current_collection.url | append: '/' | append: handled_tag
+              
               assign ratio = 1
-            endif
-            
-            assign card_color_scheme = settings.card_color_scheme
-            assign card_style = settings.card_style
-            if card_style == null
-              assign card_color_scheme = settings.collection_card_color_scheme
-              assign card_style = settings.collection_card_style
-            endif
-          -%}
-          <li class="grid__item">
-            <div class="card-wrapper animate-arrow">
-              <div
-                class="
-                  card
-                  card--{{ card_style }}
-                  {% if tag_image %} card--media{% else %} card--text{% endif %}
-                  {% if card_style == 'card' %} color-{{ card_color_scheme }} gradient{% endif %}
-                "
-                style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
-              >
+              if tag_image and section.settings.image_ratio == 'portrait'
+                assign ratio = 0.8
+              elsif tag_image and section.settings.image_ratio == 'adapt'
+                assign ratio = tag_image.aspect_ratio
+              endif
+              if ratio == 0 or ratio == null
+                assign ratio = 1
+              endif
+              
+              assign card_color_scheme = settings.card_color_scheme
+              assign card_style = settings.card_style
+              if card_style == null
+                assign card_color_scheme = settings.collection_card_color_scheme
+                assign card_style = settings.collection_card_style
+              endif
+            -%}
+            <li class="grid__item">
+              <div class="card-wrapper animate-arrow">
                 <div
-                  class="card__inner {% if card_style == 'standard' %}color-{{ card_color_scheme }} gradient{% endif %}{% if tag_image or card_style == 'standard' %} ratio{% endif %}"
+                  class="
+                    card
+                    card--{{ card_style }}
+                    {% if tag_image %} card--media{% else %} card--text{% endif %}
+                    {% if card_style == 'card' %} color-{{ card_color_scheme }} gradient{% endif %}
+                  "
                   style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
                 >
-                  {%- if tag_image -%}
-                    <div class="card__media">
-                      <div class="media media--transparent media--hover-effect">
-                        <img
-                          srcset="
-                            {%- if tag_image.width >= 165 -%}{{ tag_image | image_url: width: 165 }} 165w,{%- endif -%}
-                            {%- if tag_image.width >= 330 -%}{{ tag_image | image_url: width: 330 }} 330w,{%- endif -%}
-                            {%- if tag_image.width >= 535 -%}{{ tag_image | image_url: width: 535 }} 535w,{%- endif -%}
-                            {%- if tag_image.width >= 750 -%}{{ tag_image | image_url: width: 750 }} 750w,{%- endif -%}
-                            {%- if tag_image.width >= 1000 -%}{{ tag_image | image_url: width: 1000 }} 1000w,{%- endif -%}
-                            {%- if tag_image.width >= 1500 -%}{{ tag_image | image_url: width: 1500 }} 1500w,{%- endif -%}
-                            {{ tag_image | image_url }} {{ tag_image.width }}w
-                          "
-                          src="{{ tag_image | image_url: width: 1500 }}"
-                          sizes="
-                            (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: columns_desktop }}px,
-                            (min-width: 750px) calc((100vw - 10rem) / {{ columns_desktop }}),
-                            calc(100vw - 3rem)
-                          "
-                          alt="{{ tag | escape }}"
-                          height="{{ tag_image.height }}"
-                          width="{{ tag_image.width }}"
-                          loading="lazy"
-                          class="motion-reduce"
-                        >
+                  <div
+                    class="card__inner {% if card_style == 'standard' %}color-{{ card_color_scheme }} gradient{% endif %}{% if tag_image or card_style == 'standard' %} ratio{% endif %}"
+                    style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+                  >
+                    {%- if tag_image contains 'https://' -%}
+                      <div class="card__media">
+                        <div class="media media--transparent media--hover-effect">
+                          <img
+                            src="{{ tag_image }}"
+                            alt="{{ tag | escape }}"
+                            loading="lazy"
+                            class="motion-reduce"
+                            width="535"
+                            height="300"
+                            style="width: 100%; height: auto; object-fit: cover;"
+                          >
+                        </div>
+                        <span class="badge card-badge">
+                          {{- tag | escape -}}
+                        </span>
                       </div>
-                      <span class="badge card-badge">
-                        {{- tag | escape -}}
-                      </span>
+                    {%- elsif tag_image != blank -%}
+                      <div class="card__media">
+                        <div class="media media--transparent media--hover-effect">
+                          <img
+                            srcset="
+                              {%- if tag_image.width >= 165 -%}{{ tag_image | image_url: width: 165 }} 165w,{%- endif -%}
+                              {%- if tag_image.width >= 330 -%}{{ tag_image | image_url: width: 330 }} 330w,{%- endif -%}
+                              {%- if tag_image.width >= 535 -%}{{ tag_image | image_url: width: 535 }} 535w,{%- endif -%}
+                              {%- if tag_image.width >= 750 -%}{{ tag_image | image_url: width: 750 }} 750w,{%- endif -%}
+                              {%- if tag_image.width >= 1000 -%}{{ tag_image | image_url: width: 1000 }} 1000w,{%- endif -%}
+                              {%- if tag_image.width >= 1500 -%}{{ tag_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                              {{ tag_image | image_url }} {{ tag_image.width }}w
+                            "
+                            src="{{ tag_image | image_url: width: 1500 }}"
+                            sizes="
+                              (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: columns_desktop }}px,
+                              (min-width: 750px) calc((100vw - 10rem) / {{ columns_desktop }}),
+                              calc(100vw - 3rem)
+                            "
+                            alt="{{ tag | escape }}"
+                            height="{{ tag_image.height }}"
+                            width="{{ tag_image.width }}"
+                            loading="lazy"
+                            class="motion-reduce"
+                          >
+                        </div>
+                        <span class="badge card-badge">
+                          {{- tag | escape -}}
+                        </span>
+                      </div>
+                    {%- endif -%}
+                  </div>
+                  
+                  {%- if card_style == 'card' or tag_image -%}
+                    <div class="card__content">
+                      <div class="">
+                        <h3 class="card__heading">
+                          <a href="{{ tag_url }}" class="full-unstyled-link">
+                            {% comment %}Keep this empty but don't remove the heading structure{% endcomment %}
+                          </a>
+                        </h3>
+                      </div>
                     </div>
                   {%- else -%}
-                    <div class="card__media">
-                      {%- liquid
-                        assign placeholder_image_index = forloop.index0 | modulo: 4 | plus: 1
-                        assign placeholder_image = 'collection-' | append: placeholder_image_index
-                      -%}
-                      {{ placeholder_image | placeholder_svg_tag: 'placeholder-svg' }}
-                      <span class="badge card-badge">
-                        {{- tag | escape -}}
-                      </span>
+                    <div class="card__content">
+                      <div class="">
+                        <h3 class="card__heading">
+                          <a href="{{ tag_url }}" class="full-unstyled-link">
+                            {% comment %}Keep this empty but don't remove the heading structure{% endcomment %}
+                          </a>
+                        </h3>
+                      </div>
                     </div>
                   {%- endif -%}
                 </div>
-                
-                {%- if card_style == 'card' or tag_image -%}
-                  <div class="card__content">
-                    <div class="">
-                      <h3 class="card__heading">
-                        <a href="{{ tag_url }}" class="full-unstyled-link">
-                          {% comment %}Keep this empty but don't remove the heading structure{% endcomment %}
-                        </a>
-                      </h3>
-                    </div>
-                  </div>
-                {%- else -%}
-                  <div class="card__content">
-                    <div class="">
-                      <h3 class="card__heading">
-                        <a href="{{ tag_url }}" class="full-unstyled-link">
-                          {% comment %}Keep this empty but don't remove the heading structure{% endcomment %}
-                        </a>
-                      </h3>
-                    </div>
-                  </div>
-                {%- endif -%}
               </div>
-            </div>
-          </li>
-        {%- endfor -%}
-      </ul>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {% endpaginate %}
     {%- else -%}
       {%- if is_main_collection == false -%}
         {%- comment -%}Don't show anything when on a filtered collection page{%- endcomment -%}
