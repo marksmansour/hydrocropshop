@@ -3802,3 +3802,103 @@ details-disclosure > details {
   text-decoration: none!important;
   color: #000!important;
 }
+
+/* Announcement Bar Slideshow Styles */
+@media screen and (max-width: 989px) {
+  .announcement-slideshow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .announcement-slideshow__slides {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .announcement-slideshow__slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateX(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .announcement-slideshow__slide--active {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Slide comes in from the right (next) */
+  .announcement-slideshow__slide--next {
+    transform: translateX(100%);
+  }
+
+  /* Slide comes in from the left (previous) */
+  .announcement-slideshow__slide--prev {
+    transform: translateX(-100%);
+  }
+
+  .announcement-slideshow__slide .announcement-bar__announcement {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .announcement-slideshow__nav {
+    background: none;
+    border: none;
+    color: rgb(var(--color-foreground));
+    cursor: pointer;
+    padding: 0 1rem;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 300;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .announcement-slideshow__nav:hover {
+    opacity: 0.7;
+  }
+
+  .announcement-slideshow__nav:focus-visible {
+    outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
+    outline-offset: -0.2rem;
+  }
+
+  .announcement-slideshow__nav span {
+    line-height: 1;
+  }
+
+  /* Hide separators in slideshow mode */
+  .announcement-slideshow .announcement-bar__separator {
+    display: none;
+  }
+
+  /* Override the horizontal scroll styles */
+  .announcement-bar__announcements {
+    overflow-x: hidden !important;
+    scrollbar-width: auto !important;
+  }
+
+  .utility-bar__grid {
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+  }
+}
+
