@@ -79,11 +79,23 @@
     margin: 0;
   }
   
+  @media screen and (max-width: 989px) {
+    .header__top-section {
+      width: 100%;
+    }
+    .header__top-section .header__top-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
   .header__top-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
+    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 1.5rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 1.5rem;
     max-width: var(--page-width);
     margin: 0 auto;
   }
@@ -226,6 +238,22 @@
     .header__contact-phone {
       font-size: 20px;
     }
+    
+    /* Make logo 70% of current size on mobile */
+    .header__heading-logo-wrapper {
+      width: 70% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      text-align: left !important;
+    }
+    
+    .header__heading-logo {
+      width: 100% !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+    }
   }
 
   .mobile-menu-drawer-container {
@@ -240,34 +268,85 @@
   .header__search-modal-toggle-mobile {
       display: none;
   }
+  
+  .header__contact-phone-icon {
+      display: none; /* Hidden by default on desktop */
+  }
 
 
   @media screen and (max-width: 989px) {
     .header__top-wrapper {
         /* If contact info needs to be smaller or stack on mobile */
-        align-items: flex-start; /* Align items to the top for stacking */
+        align-items: center; /* Center align items */
+        justify-content: space-between; /* Ensure proper spacing */
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+    .header__logo-section {
+      flex-shrink: 0; /* Prevent logo section from shrinking */
+      flex-grow: 0; /* Prevent it from growing */
+      align-self: center; /* Center vertically */
+      display: flex;
+      align-items: center; /* Center content within */
+    }
+    .header__heading {
+      margin: 0 !important; /* Remove any default margins */
+      text-align: left !important; /* Align logo to the left */
+      justify-self: start !important; /* Override base.css centering */
+    }
+    .header__heading-link {
+      padding: 0 !important; /* Remove all padding on mobile */
+      margin: 0 !important; /* Remove all margin on mobile */
+      display: inline-block !important;
+      justify-self: start !important; /* Override base.css centering */
+      text-align: left !important;
+      align-items: flex-start !important; /* Override any inline styles */
+    }
+    .header__heading-logo-wrapper {
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
     }
     .header__search-section {
       min-width: auto; /* Allow search section to shrink on mobile */
-      flex-direction: column; /* Stack contact info and search icon */
+      flex-direction: column; /* Stack items vertically */
       align-items: flex-end; /* Align items to the right */
+      text-align: center; /* Center text */
+      flex-shrink: 0; /* Prevent shrinking */
     }
-     .header__search-section .header__contact-info {
-        margin-bottom: 0.5rem; /* Space between contact and search icon */
-        margin-right: 0; /* No right margin when stacked */
-        flex-grow: 0; /* Don't allow contact info to take all space */
-        width: 100%; /* Ensure contact info takes full width of this column */
-        text-align: right; /* Keep text aligned to the right */
+    .header__search-section .header__contact-info {
+        display: block; /* Keep text visible on mobile */
+        margin-bottom: 0.5rem; /* Space between text and icon */
+    }
+    .header__search-section .header__contact-info .header__contact-phone {
+        display: none; /* Hide only the phone number */
+    }
+    .header__contact-phone-icon {
+        display: flex !important; /* Show phone icon on mobile */
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-decoration: none;
+        padding: 0.5rem;
+    }
+    .header__contact-phone-icon .svg-wrapper {
+        width: 3rem; 
+        height: 3rem;
+    }
+    .header__contact-phone-icon svg {
+        fill: #333;
+        width: 100%;
+        height: 100%;
     }
     .header__search-bar { /* Hide DESKTOP search bar on mobile */
       display: none;
     }
-    .header__search-modal-toggle-mobile { /* Show MOBILE search toggle */
-      display: flex; /* Use flex to align icon properly */
+    .header__search-modal-toggle-mobile { /* Hide in top section on mobile */
+      display: none !important;
+    }
+    .header__bottom-section .header__search-modal-toggle-mobile { /* Show in bottom section on mobile */
+      display: flex !important;
       align-items: center;
-      justify-content: flex-end; /* Align icon to the right under contact info */
-      width: 100%; /* Ensure it takes full width of its parent column for alignment */
-      padding-top: 0.25rem; /* Small space above search icon */
     }
 
     .desktop-inline-menu {
@@ -283,6 +362,11 @@
     }
     .header__bottom-wrapper {
        padding: 0 1.5rem;
+    }
+    
+    /* Adjust icon section to include search */
+    .header__icons-section {
+      gap: 0.5rem;
     }
   }
 
@@ -316,6 +400,8 @@
     .header__top-wrapper {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
     }
   }
 {%- endstyle -%}
@@ -330,7 +416,11 @@
   endfor
 -%}
 
-<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+{%- if section.settings.sticky_header_type != 'none' -%}
+  <sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}" class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+{%- else -%}
+  <div class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+{%- endif -%}
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -384,6 +474,12 @@
           <p class="header__contact-title">Speak to an Expert</p>
           <p class="header__contact-phone">020 3488 0419</p>
         </div>
+        <!-- Phone icon for mobile -->
+        <a href="tel:02034880419" class="header__contact-phone-icon">
+          <span class="svg-wrapper">
+            {{ 'icon-phone.svg' | inline_asset_content }}
+          </span>
+        </a>
         <!-- Desktop Search Form - updated to match modal structure -->
         <div class="header__search-bar">
           {%- if settings.predictive_search_enabled -%}
@@ -443,9 +539,7 @@
             </search-form>
           {%- endif -%}
         </div>
-        <div class="header__search-modal-toggle-mobile">
-          {% render 'header-search', input_id: 'SearchModalMobile' %}
-        </div>
+
       </div>
     </div>
   </div>
@@ -480,6 +574,11 @@
       
       <!-- Account and Cart on Right -->
       <div class="header__icons-section">
+        <!-- Search icon for mobile -->
+        <div class="header__search-modal-toggle-mobile">
+          {% render 'header-search', input_id: 'SearchModalMobile' %}
+        </div>
+        
         {%- if shop.customer_accounts_enabled -%}
           <a
             href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
@@ -535,7 +634,11 @@
       </div>
     </div>
   </div>
-</{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
+{%- if section.settings.sticky_header_type != 'none' -%}
+  </sticky-header>
+{%- else -%}
+  </div>
+{%- endif -%}
 
 {%- if settings.cart_type == "notification" -%}
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
