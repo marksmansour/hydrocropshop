@@ -74,6 +74,38 @@
           </span>
         </button>
       </div>
+      
+      <!-- Free Shipping Progress -->
+      {%- if cart != empty -%}
+        {%- liquid
+          assign free_shipping_threshold = 5000
+          assign cart_total = cart.total_price
+          assign amount_left = free_shipping_threshold | minus: cart_total
+          assign progress_percentage = cart_total | times: 100 | divided_by: free_shipping_threshold
+          if progress_percentage > 100
+            assign progress_percentage = 100
+          endif
+        -%}
+        
+        <div class="cart-drawer__shipping-progress">
+          {%- if amount_left > 0 -%}
+            <p class="shipping-message">
+              You are <strong>{{ amount_left | money }}</strong> away from free shipping!
+            </p>
+          {%- else -%}
+            <p class="shipping-message shipping-message--achieved">
+              <span class="shipping-check">✓</span> You've got free shipping!
+            </p>
+          {%- endif -%}
+          
+          <div class="shipping-progress-container">
+            <div class="shipping-progress-background">
+              <div class="shipping-progress-bar" style="width: {{ progress_percentage }}%; background-color: #28a745 !important; height: 8px !important; display: block !important;">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+      
       <cart-drawer-items
         {% if cart == empty %}
           class=" is-empty"
