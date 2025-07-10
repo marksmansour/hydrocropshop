@@ -119,34 +119,37 @@
       </div>
     {%- endunless -%}
 
-    {%- if current_collection and current_collection.all_tags.size > 0 and is_main_collection -%}
+    {%- if current_collection and current_collection.metafields.custom.subcategories.value and is_main_collection -%}
+      {%- assign subcategories = current_collection.metafields.custom.subcategories.value -%}
       {% paginate current_collection.products by 1000 %}
         {%- assign all_products = current_collection.products -%}
         <ul class="grid grid--{{ columns_desktop }}-col-desktop grid--{{ columns_mobile }}-col-tablet-down contains-card contains-card--collection{% if settings.card_style == 'standard' %} contains-card--standard{% endif %}">
-          {%- for tag in current_collection.all_tags -%}
+          {%- for subcategory in subcategories -%}
             {%- liquid
-              assign product_for_image = nil
-              assign tag_image = nil
-              
-              for product_item in all_products
-                if product_item.tags contains tag
-                  # Try featured image first
-                  if product_item.featured_image != blank
-                    assign product_for_image = product_item
-                    assign tag_image = product_item.featured_image
-                    break
-                  # If no featured image, try any other image from the product
-                  elsif product_item.images.size > 0
-                    assign product_for_image = product_item
-                    assign tag_image = product_item.images.first
-                    break
-                  elsif product_for_image == nil
-                    assign product_for_image = product_item 
-                  endif
-                endif
-              endfor
+              assign tag = subcategory.name
+              assign tag_image = subcategory.image
               
               if tag_image == nil
+                assign product_for_image = nil
+                
+                for product_item in all_products
+                  if product_item.tags contains tag
+                    if product_item.featured_image != blank
+                      assign product_for_image = product_item
+                      assign tag_image = product_item.featured_image
+                      break
+                    elsif product_item.images.size > 0
+                      assign product_for_image = product_item
+                      assign tag_image = product_item.images.first
+                      break
+                    elsif product_for_image == nil
+                      assign product_for_image = product_item 
+                    endif
+                  endif
+                endfor
+              endif
+              
+              if tag_image == blank
                 assign tag_image = 'https://hydrocropshop.co.uk/cdn/shop/files/FinalLogo-01-medium_landscape_e99f85f4-7e7c-4012-a646-7630259c4e4c.png'
               endif
               
@@ -270,7 +273,7 @@
           {%- if current_collection == blank or current_collection == nil -%}
             <p>This section should be used on a collection page</p>
           {%- else -%}
-            <p>No tags found in the collection '{{ current_collection.title }}'</p>
+            <p>No subcategories found for the collection '{{ current_collection.title }}'</p>
           {%- endif -%}
         </div>
       {%- endif -%}
