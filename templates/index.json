@@ -46,6 +46,7 @@
       "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/banner.jpg",
+        "image_2": "shopify://shop_images/Grow-Guys-Banner-Canna.jpg",
         "image_overlay_opacity": 0,
         "image_height": "adapt",
         "desktop_content_position": "middle-center",
