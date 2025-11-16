@@ -16,6 +16,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/banner.jpg",
+            "image_mobile": "shopify://shop_images/3954954f_1157a815-dc5c-47bb-97ff-b96531a636f7.jpg",
             "image_overlay_opacity": 0,
             "hide_content": false,
             "heading": "",
@@ -34,6 +35,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/Grow-Guys-Banner-Canna.jpg",
+            "image_mobile": "shopify://shop_images/GBTENT-04-25.jpg",
             "image_overlay_opacity": 0,
             "hide_content": false,
             "heading": "",
