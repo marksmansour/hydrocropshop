@@ -659,3 +659,7 @@ slideshow-component .slider-buttons {
     right: 1rem;
   }
 }
+
+.banner__content--middle-center {
+  display: none;
+}
