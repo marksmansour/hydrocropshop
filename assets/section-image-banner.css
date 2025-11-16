@@ -519,12 +519,6 @@
   }
 }
 
-.banner__media-desktop,
-.banner__media-mobile {
-  width: 100%;
-  height: auto;
-}
-
 .banner__media-desktop img,
 .banner__media-mobile img {
   width: 100%;
@@ -532,37 +526,136 @@
   display: block;
 }
 
-/* Slideshow container full width */
-.slideshow--full-width {
-  width: 100%;
-  max-width: 100%;
-}
-
-.slideshow--full-width .banner {
-  width: 100%;
-}
-
-/* Make slideshow media adapt to image height */
-.slideshow .slideshow__media {
-  position: relative;
-  height: auto;
-}
-
-.slideshow .slideshow__slide {
-  position: relative;
-}
-
-/* Position controls at bottom over the slideshow */
-.slideshow__controls--bottom {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-}
-
-/* Ensure slideshow component is positioned for absolute controls */
+/* Slideshow container */
 slideshow-component {
   position: relative;
   display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.slideshow.slider {
+  position: relative;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  overflow: visible;
+}
+
+.slideshow.banner {
+  min-height: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.slideshow__slide {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+/* Make each slide collapse to its image height */
+.slideshow__slide .banner__media-desktop,
+.slideshow__slide .banner__media-mobile {
+  height: auto;
+  line-height: 0;
+}
+
+/* Override banner min-heights for slideshow */
+.slideshow.banner--adapt {
+  min-height: 0 !important;
+}
+
+@media screen and (min-width: 750px) {
+  .slideshow.banner--small,
+  .slideshow.banner--medium,
+  .slideshow.banner--large {
+    min-height: 0 !important;
+  }
+}
+
+/* Remove grid margin for slideshow */
+.slideshow.grid {
+  margin-bottom: 0;
+}
+
+/* Remove slider margin for slideshow */
+.slideshow.slider--everywhere {
+  margin-bottom: 0;
+}
+
+/* Ensure slideshow slides have no extra height */
+.slideshow .slideshow__slide {
+  min-height: 0;
+  height: auto;
+}
+
+/* Remove any pseudo-element spacing */
+.slideshow.banner::after {
+  display: none;
+}
+
+/* Arrow Navigation */
+slideshow-component .slider-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.slideshow__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  transition: opacity 0.2s ease;
+  pointer-events: auto;
+}
+
+.slideshow__arrow:hover {
+  opacity: 0.7;
+}
+
+.slideshow__arrow svg {
+  width: 32px;
+  height: 32px;
+  color: #000;
+}
+
+.slideshow__arrow--prev {
+  left: 0.5rem;
+}
+
+.slideshow__arrow--next {
+  right: 0.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .slideshow__arrow svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .slideshow__arrow--prev {
+    left: 1rem;
+  }
+
+  .slideshow__arrow--next {
+    right: 1rem;
+  }
 }
