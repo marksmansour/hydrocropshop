@@ -3584,6 +3584,8 @@ details-disclosure > details {
 
 .spinner {
   animation: rotator 1.4s linear infinite;
+  max-width: 3rem;
+  max-height: 3rem;
 }
 
 @keyframes rotator {

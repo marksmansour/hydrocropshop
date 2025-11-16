@@ -519,18 +519,50 @@
   }
 }
 
+.banner__media-desktop,
+.banner__media-mobile {
+  width: 100%;
+  height: auto;
+}
+
 .banner__media-desktop img,
 .banner__media-mobile img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
 }
 
-/* Carousel slide styles */
-.banner__slide {
+/* Slideshow container full width */
+.slideshow--full-width {
+  width: 100%;
+  max-width: 100%;
+}
+
+.slideshow--full-width .banner {
+  width: 100%;
+}
+
+/* Make slideshow media adapt to image height */
+.slideshow .slideshow__media {
+  position: relative;
+  height: auto;
+}
+
+.slideshow .slideshow__slide {
   position: relative;
 }
 
-.page-width-banner {
-  width: 100%;
+/* Position controls at bottom over the slideshow */
+.slideshow__controls--bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Ensure slideshow component is positioned for absolute controls */
+slideshow-component {
+  position: relative;
+  display: block;
 }

@@ -2,40 +2,201 @@
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 
-{%- if section.settings.image_height == 'adapt' and section.blocks.first.settings.image_desktop != blank -%}
-  {%- style -%}
-    @media screen and (max-width: 749px) {
-      #Banner-{{ section.id }}::before,
-      #Banner-{{ section.id }} .banner__media::before {
-        {%- if section.blocks.first.settings.image_mobile != blank -%}
-          padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image_mobile.aspect_ratio | times: 100 }}%;
-        {%- else -%}
-          padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image_desktop.aspect_ratio | times: 100 }}%;
-        {%- endif -%}
-        content: '';
-        display: block;
-      }
-    }
-
-    @media screen and (min-width: 750px) {
-      #Banner-{{ section.id }}::before,
-      #Banner-{{ section.id }} .banner__media::before {
-        padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image_desktop.aspect_ratio | times: 100 }}%;
-        content: '';
-        display: block;
-      }
-    }
-  {%- endstyle -%}
-{%- endif -%}
+{%- style -%}
+  #Banner-{{ section.id }}::after {
+    opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+{%- endstyle -%}
 
 <slideshow-component
-  class="slider-mobile-gutter page-width-banner{% if section.settings.show_text_below %} mobile-text-below{% endif %}"
+  class="slider-mobile-gutter{% if section.settings.layout == 'full_bleed' %} slideshow--full-width{% else %} page-width{% endif %}"
   role="region"
   aria-roledescription="Image carousel"
   aria-label="{{ section.settings.accessibility_info | default: 'Image banner carousel' | escape }}"
 >
+  <div
+    class="slideshow banner grid grid--1-col slider slider--everywhere{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+    id="Banner-{{ section.id }}"
+    aria-live="polite"
+    aria-atomic="true"
+    data-autoplay="false"
+  >
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign has_desktop = false
+        assign has_mobile = false
+        if block.settings.image_desktop != blank
+          assign has_desktop = true
+        endif
+        if block.settings.image_mobile != blank
+          assign has_mobile = true
+        endif
+        
+        comment
+          Only render this slide if at least one image exists
+        endcomment
+        assign render_slide = false
+        if has_desktop or has_mobile
+          assign render_slide = true
+        endif
+      -%}
+
+      {%- if render_slide -%}
+        {%- style -%}
+          #Slide-{{ section.id }}-{{ forloop.index }} .banner__media::after {
+            opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
+          }
+        {%- endstyle -%}
+        
+        <div
+          class="slideshow__slide grid__item grid--1-col slider__slide"
+          id="Slide-{{ section.id }}-{{ forloop.index }}"
+          {{ block.shopify_attributes }}
+          role="group"
+          aria-roledescription="slide"
+          aria-label="{{ forloop.index }} of {{ forloop.length }}"
+          tabindex="-1"
+        >
+          <div class="slideshow__media banner__media media{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
+            {%- liquid
+              assign fetch_priority = 'auto'
+              if section.index == 1 and forloop.first
+                assign fetch_priority = 'high'
+              endif
+
+              assign sizes = '100vw'
+              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+            -%}
+
+            {%- comment -%} Desktop Image {%- endcomment -%}
+            {%- if has_desktop -%}
+              {%- assign height_desktop = block.settings.image_desktop.width | divided_by: block.settings.image_desktop.aspect_ratio | round -%}
+              <div class="banner__media-desktop">
+                {%- if forloop.first -%}
+                  {{
+                    block.settings.image_desktop
+                    | image_url: width: 3840
+                    | image_tag: height: height_desktop, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                  }}
+                {%- else -%}
+                  {{
+                    block.settings.image_desktop
+                    | image_url: width: 3840
+                    | image_tag: loading: 'lazy', height: height_desktop, sizes: sizes, widths: widths
+                  }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- comment -%} Mobile Image {%- endcomment -%}
+            {%- if has_mobile -%}
+              {%- assign height_mobile = block.settings.image_mobile.width | divided_by: block.settings.image_mobile.aspect_ratio | round -%}
+              <div class="banner__media-mobile">
+                {%- if forloop.first -%}
+                  {{
+                    block.settings.image_mobile
+                    | image_url: width: 3840
+                    | image_tag: height: height_mobile, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                  }}
+                {%- else -%}
+                  {{
+                    block.settings.image_mobile
+                    | image_url: width: 3840
+                    | image_tag: loading: 'lazy', height: height_mobile, sizes: sizes, widths: widths
+                  }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            {%- comment -%} Fallback: If only one image exists, show it on both {%- endcomment -%}
+            {%- if has_desktop and has_mobile == false -%}
+              {%- assign height_desktop = block.settings.image_desktop.width | divided_by: block.settings.image_desktop.aspect_ratio | round -%}
+              <div class="banner__media-mobile">
+                {%- if forloop.first -%}
+                  {{
+                    block.settings.image_desktop
+                    | image_url: width: 3840
+                    | image_tag: height: height_desktop, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                  }}
+                {%- else -%}
+                  {{
+                    block.settings.image_desktop
+                    | image_url: width: 3840
+                    | image_tag: loading: 'lazy', height: height_desktop, sizes: sizes, widths: widths
+                  }}
+                {%- endif -%}
+              </div>
+            {%- elsif has_mobile and has_desktop == false -%}
+              {%- assign height_mobile = block.settings.image_mobile.width | divided_by: block.settings.image_mobile.aspect_ratio | round -%}
+              <div class="banner__media-desktop">
+                {%- if forloop.first -%}
+                  {{
+                    block.settings.image_mobile
+                    | image_url: width: 3840
+                    | image_tag: height: height_mobile, sizes: sizes, widths: widths, fetchpriority: fetch_priority
+                  }}
+                {%- else -%}
+                  {{
+                    block.settings.image_mobile
+                    | image_url: width: 3840
+                    | image_tag: loading: 'lazy', height: height_mobile, sizes: sizes, widths: widths
+                  }}
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- unless block.settings.hide_content -%}
+            <div class="slideshow__text-wrapper banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll and forloop.index == 1 %} scroll-trigger animate--slide-in{% endif %}">
+              <div class="slideshow__text banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="banner__heading inline-richtext {{ block.settings.heading_size }}">
+                    {{ block.settings.heading }}
+                  </h2>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="banner__text rte {{ block.settings.text_style }}">
+                    <p>{{ block.settings.text }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.button_label_1 != blank or block.settings.button_label_2 != blank -%}
+                  <div class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}">
+                    {%- if block.settings.button_label_1 != blank -%}
+                      <a
+                        {% if block.settings.button_link_1 == blank %}
+                          role="link" aria-disabled="true"
+                        {% else %}
+                          href="{{ block.settings.button_link_1 }}"
+                        {% endif %}
+                        class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
+                      >
+                        {{- block.settings.button_label_1 | escape -}}
+                      </a>
+                    {%- endif -%}
+                    {%- if block.settings.button_label_2 != blank -%}
+                      <a
+                        {% if block.settings.button_link_2 == blank %}
+                          role="link" aria-disabled="true"
+                        {% else %}
+                          href="{{ block.settings.button_link_2 }}"
+                        {% endif %}
+                        class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
+                      >
+                        {{- block.settings.button_label_2 | escape -}}
+                      </a>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endunless -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
   {%- if section.blocks.size > 1 -%}
-    <div class="slideshow__controls slider-buttons">
+    <div class="slideshow__controls slideshow__controls--bottom slider-buttons">
       <button
         type="button"
         class="slider-button slider-button--prev"
@@ -84,153 +245,6 @@
       </button>
     </div>
   {%- endif -%}
-
-  <div
-    class="banner banner--{{ section.settings.image_height }} slider slider--everywhere{% if section.settings.show_text_below %} banner--mobile-bottom{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
-    id="Banner-{{ section.id }}"
-    aria-live="polite"
-    aria-atomic="true"
-    data-autoplay="false"
-  >
-    {%- for block in section.blocks -%}
-      {%- style -%}
-        #Slide-{{ section.id }}-{{ forloop.index }} .banner__media::after {
-          opacity: {{ block.settings.image_overlay_opacity | divided_by: 100.0 }};
-        }
-      {%- endstyle -%}
-      <div
-        class="banner__slide slider__slide"
-        id="Slide-{{ section.id }}-{{ forloop.index }}"
-        {{ block.shopify_attributes }}
-        role="group"
-        aria-roledescription="slide"
-        aria-label="{{ forloop.index }} of {{ forloop.length }}"
-        tabindex="-1"
-      >
-        <div class="banner__media media{% if block.settings.image_desktop == blank and block.settings.image_mobile == blank %} placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}">
-          {%- liquid
-            assign fetch_priority = 'auto'
-            if section.index == 1 and forloop.first
-              assign fetch_priority = 'high'
-            endif
-
-            if section.settings.image_behavior == 'ambient'
-              assign sizes = '120vw'
-              assign widths = '450, 660, 900, 1320, 1800, 2136, 2400, 3600, 7680'
-            else
-              assign sizes = '100vw'
-              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
-            endif
-          -%}
-
-          {%- comment -%} Desktop Image {%- endcomment -%}
-          {%- if block.settings.image_desktop != blank -%}
-            {%- assign height_desktop = block.settings.image_desktop.width | divided_by: block.settings.image_desktop.aspect_ratio | round -%}
-            <div class="banner__media-desktop">
-              {%- if forloop.first -%}
-                {{
-                  block.settings.image_desktop
-                  | image_url: width: 3840
-                  | image_tag: height: height_desktop, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class: 'banner__image'
-                }}
-              {%- else -%}
-                {{
-                  block.settings.image_desktop
-                  | image_url: width: 3840
-                  | image_tag: loading: 'lazy', height: height_desktop, sizes: sizes, widths: widths, class: 'banner__image'
-                }}
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-          {%- comment -%} Mobile Image {%- endcomment -%}
-          {%- if block.settings.image_mobile != blank -%}
-            {%- assign height_mobile = block.settings.image_mobile.width | divided_by: block.settings.image_mobile.aspect_ratio | round -%}
-            <div class="banner__media-mobile">
-              {%- if forloop.first -%}
-                {{
-                  block.settings.image_mobile
-                  | image_url: width: 3840
-                  | image_tag: height: height_mobile, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class: 'banner__image'
-                }}
-              {%- else -%}
-                {{
-                  block.settings.image_mobile
-                  | image_url: width: 3840
-                  | image_tag: loading: 'lazy', height: height_mobile, sizes: sizes, widths: widths, class: 'banner__image'
-                }}
-              {%- endif -%}
-            </div>
-          {%- elsif block.settings.image_desktop != blank -%}
-            {%- comment -%} Fallback to desktop image if no mobile image {%- endcomment -%}
-            {%- assign height_desktop = block.settings.image_desktop.width | divided_by: block.settings.image_desktop.aspect_ratio | round -%}
-            <div class="banner__media-mobile">
-              {%- if forloop.first -%}
-                {{
-                  block.settings.image_desktop
-                  | image_url: width: 3840
-                  | image_tag: height: height_desktop, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class: 'banner__image'
-                }}
-              {%- else -%}
-                {{
-                  block.settings.image_desktop
-                  | image_url: width: 3840
-                  | image_tag: loading: 'lazy', height: height_desktop, sizes: sizes, widths: widths, class: 'banner__image'
-                }}
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-          {%- if block.settings.image_desktop == blank and block.settings.image_mobile == blank -%}
-            {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          {%- endif -%}
-        </div>
-
-        <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll and forloop.first %} scroll-trigger animate--slide-in{% endif %}" style="{% if block.settings.hide_content %}display:none;{% endif %}">
-          <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
-            {%- if block.settings.heading != blank -%}
-              <h2 class="banner__heading inline-richtext {{ block.settings.heading_size }}">
-                {{ block.settings.heading }}
-              </h2>
-            {%- endif -%}
-            {%- if block.settings.text != blank -%}
-              <div class="banner__text rte {{ block.settings.text_style }}">
-                <p>{{ block.settings.text }}</p>
-              </div>
-            {%- endif -%}
-            {%- if block.settings.button_label_1 != blank or block.settings.button_label_2 != blank -%}
-              <div class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}">
-                {%- if block.settings.button_label_1 != blank -%}
-                  <a
-                    {% if block.settings.button_link_1 == blank %}
-                      role="link" aria-disabled="true"
-                    {% else %}
-                      href="{{ block.settings.button_link_1 }}"
-                    {% endif %}
-                    class="button{% if block.settings.button_style_secondary_1 %} button--secondary{% else %} button--primary{% endif %}"
-                  >
-                    {{- block.settings.button_label_1 | escape -}}
-                  </a>
-                {%- endif -%}
-                {%- if block.settings.button_label_2 != blank -%}
-                  <a
-                    {% if block.settings.button_link_2 == blank %}
-                      role="link" aria-disabled="true"
-                    {% else %}
-                      href="{{ block.settings.button_link_2 }}"
-                    {% endif %}
-                    class="button{% if block.settings.button_style_secondary_2 %} button--secondary{% else %} button--primary{% endif %}"
-                  >
-                    {{- block.settings.button_label_2 | escape -}}
-                  </a>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    {%- endfor -%}
-  </div>
 </slideshow-component>
 
 {%- if request.design_mode -%}
@@ -248,28 +262,29 @@
   "settings": [
     {
       "type": "select",
-      "id": "image_height",
+      "id": "layout",
       "options": [
         {
-          "value": "adapt",
-          "label": "t:sections.image-banner.settings.image_height.options__1.label"
+          "value": "full_bleed",
+          "label": "Full width"
         },
         {
-          "value": "small",
-          "label": "t:sections.image-banner.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.image-banner.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.image-banner.settings.image_height.options__4.label"
+          "value": "grid",
+          "label": "Grid"
         }
       ],
-      "default": "medium",
-      "label": "t:sections.image-banner.settings.image_height.label",
-      "info": "t:sections.image-banner.settings.image_height.info"
+      "default": "full_bleed",
+      "label": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "t:sections.image-banner.settings.image_overlay_opacity.label",
+      "default": 0
     },
     {
       "type": "select",
@@ -356,28 +371,10 @@
         {
           "value": "ambient",
           "label": "t:sections.all.animation.image_behavior.options__2.label"
-        },
-        {
-          "value": "fixed",
-          "label": "t:sections.all.animation.image_behavior.options__3.label"
-        },
-        {
-          "value": "zoom-in",
-          "label": "t:sections.all.animation.image_behavior.options__4.label"
         }
       ],
       "default": "none",
       "label": "t:sections.all.animation.image_behavior.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.image-banner.settings.mobile.content"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_text_below",
-      "default": true,
-      "label": "t:sections.image-banner.settings.show_text_below.label"
     },
     {
       "type": "header",
@@ -395,18 +392,19 @@
     {
       "type": "slide",
       "name": "Slide",
-      "limit": 3,
+      "limit": 10,
       "settings": [
         {
           "type": "image_picker",
           "id": "image_desktop",
-          "label": "Desktop Image"
+          "label": "Desktop Image",
+          "info": "Shown on desktop. If mobile image is not provided, this will be used for both."
         },
         {
           "type": "image_picker",
           "id": "image_mobile",
           "label": "Mobile Image",
-          "info": "Optional. If not provided, desktop image will be used."
+          "info": "Optional. Shown on mobile. If desktop image is not provided, this will be used for both."
         },
         {
           "type": "range",
