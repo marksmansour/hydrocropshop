@@ -499,3 +499,38 @@
     color: currentColor;
   }
 }
+
+/* Mobile/Desktop Image Visibility */
+.banner__media-desktop {
+  display: none;
+}
+
+.banner__media-mobile {
+  display: block;
+}
+
+@media screen and (min-width: 750px) {
+  .banner__media-desktop {
+    display: block;
+  }
+
+  .banner__media-mobile {
+    display: none;
+  }
+}
+
+.banner__media-desktop img,
+.banner__media-mobile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Carousel slide styles */
+.banner__slide {
+  position: relative;
+}
+
+.page-width-banner {
+  width: 100%;
+}
