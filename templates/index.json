@@ -28,10 +28,28 @@
             "button_link_2": "",
             "button_style_secondary_2": false
           }
+        },
+        "slide_bqXGGC": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/Grow-Guys-Banner-Canna.jpg",
+            "hide_content": false,
+            "heading": "",
+            "heading_size": "h1",
+            "text": "",
+            "text_style": "body",
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
         }
       },
       "block_order": [
-        "slide_39GACA"
+        "slide_39GACA",
+        "slide_bqXGGC"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
