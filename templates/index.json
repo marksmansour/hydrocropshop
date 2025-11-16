@@ -16,27 +16,6 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/banner.jpg",
-            "image_mobile": "shopify://shop_images/3954954f_1157a815-dc5c-47bb-97ff-b96531a636f7.jpg",
-            "image_overlay_opacity": 0,
-            "hide_content": false,
-            "heading": "",
-            "heading_size": "h1",
-            "text": "",
-            "text_style": "body",
-            "button_label_1": "",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        },
-        "slide_MTgpjd": {
-          "type": "slide",
-          "settings": {
-            "image_desktop": "shopify://shop_images/Grow-Guys-Banner-Canna.jpg",
-            "image_mobile": "shopify://shop_images/GBTENT-04-25.jpg",
-            "image_overlay_opacity": 0,
             "hide_content": false,
             "heading": "",
             "heading_size": "h1",
@@ -52,18 +31,12 @@
         }
       },
       "block_order": [
-        "slide_39GACA",
-        "slide_MTgpjd"
+        "slide_39GACA"
       ],
       "name": "t:sections.image-banner.presets.name",
       "settings": {
-        "image_height": "adapt",
-        "slider_visual": "dots",
         "desktop_content_position": "middle-center",
-        "color_scheme": "",
-        "image_behavior": "none",
-        "show_text_below": true,
-        "accessibility_info": "Image banner carousel"
+        "color_scheme": ""
       }
     },
     "collection_list_k8T7Ld": {
