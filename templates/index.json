@@ -16,6 +16,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/banner.jpg",
+            "image_mobile": "shopify://shop_images/Finbar_Ussher_Blue_and_green_textured_background___BOLD_WEB_BANNER_FONT____LED_79ca7811-167e-4324-9caa-1a0605b154c1.jpg",
             "hide_content": false,
             "heading": "",
             "heading_size": "h1",
