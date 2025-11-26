@@ -52,15 +52,15 @@
           {%- comment -%} Desktop Image {%- endcomment -%}
           {%- if has_desktop -%}
             <div class="banner__media-desktop">
-              {%- if block.settings.slide_link != blank -%}
-                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- if block.settings.link_desktop != blank -%}
+                <a href="{{ block.settings.link_desktop }}" class="banner__link">
               {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: loading: 'lazy' }}
               {%- endif -%}
-              {%- if block.settings.slide_link != blank -%}
+              {%- if block.settings.link_desktop != blank -%}
                 </a>
               {%- endif -%}
             </div>
@@ -68,16 +68,22 @@
 
           {%- comment -%} Mobile Image {%- endcomment -%}
           {%- if has_mobile -%}
+            {%- liquid
+              assign mobile_link = block.settings.link_mobile
+              if mobile_link == blank and block.settings.link_desktop != blank
+                assign mobile_link = block.settings.link_desktop
+              endif
+            -%}
             <div class="banner__media-mobile">
-              {%- if block.settings.slide_link != blank -%}
-                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- if mobile_link != blank -%}
+                <a href="{{ mobile_link }}" class="banner__link">
               {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy' }}
               {%- endif -%}
-              {%- if block.settings.slide_link != blank -%}
+              {%- if mobile_link != blank -%}
                 </a>
               {%- endif -%}
             </div>
@@ -85,30 +91,36 @@
 
           {%- comment -%} Fallback: If only one image exists, show it on both {%- endcomment -%}
           {%- if has_desktop and has_mobile == false -%}
+            {%- liquid
+              assign mobile_link = block.settings.link_mobile
+              if mobile_link == blank and block.settings.link_desktop != blank
+                assign mobile_link = block.settings.link_desktop
+              endif
+            -%}
             <div class="banner__media-mobile">
-              {%- if block.settings.slide_link != blank -%}
-                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- if mobile_link != blank -%}
+                <a href="{{ mobile_link }}" class="banner__link">
               {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: loading: 'lazy' }}
               {%- endif -%}
-              {%- if block.settings.slide_link != blank -%}
+              {%- if mobile_link != blank -%}
                 </a>
               {%- endif -%}
             </div>
           {%- elsif has_mobile and has_desktop == false -%}
             <div class="banner__media-desktop">
-              {%- if block.settings.slide_link != blank -%}
-                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- if block.settings.link_desktop != blank -%}
+                <a href="{{ block.settings.link_desktop }}" class="banner__link">
               {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy' }}
               {%- endif -%}
-              {%- if block.settings.slide_link != blank -%}
+              {%- if block.settings.link_desktop != blank -%}
                 </a>
               {%- endif -%}
             </div>
@@ -275,9 +287,15 @@
         },
         {
           "type": "url",
-          "id": "slide_link",
-          "label": "Slide Link",
-          "info": "Makes the entire slide image clickable"
+          "id": "link_desktop",
+          "label": "Desktop Link",
+          "info": "URL for desktop image click"
+        },
+        {
+          "type": "url",
+          "id": "link_mobile",
+          "label": "Mobile Link",
+          "info": "URL for mobile image click - uses desktop link if not provided"
         }
       ]
     }
