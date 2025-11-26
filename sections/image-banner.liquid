@@ -52,10 +52,16 @@
           {%- comment -%} Desktop Image {%- endcomment -%}
           {%- if has_desktop -%}
             <div class="banner__media-desktop">
+              {%- if block.settings.slide_link != blank -%}
+                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+              {%- if block.settings.slide_link != blank -%}
+                </a>
               {%- endif -%}
             </div>
           {%- endif -%}
@@ -63,10 +69,16 @@
           {%- comment -%} Mobile Image {%- endcomment -%}
           {%- if has_mobile -%}
             <div class="banner__media-mobile">
+              {%- if block.settings.slide_link != blank -%}
+                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+              {%- if block.settings.slide_link != blank -%}
+                </a>
               {%- endif -%}
             </div>
           {%- endif -%}
@@ -74,18 +86,30 @@
           {%- comment -%} Fallback: If only one image exists, show it on both {%- endcomment -%}
           {%- if has_desktop and has_mobile == false -%}
             <div class="banner__media-mobile">
+              {%- if block.settings.slide_link != blank -%}
+                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_desktop | image_url: width: 3840 | image_tag: loading: 'lazy' }}
               {%- endif -%}
+              {%- if block.settings.slide_link != blank -%}
+                </a>
+              {%- endif -%}
             </div>
           {%- elsif has_mobile and has_desktop == false -%}
             <div class="banner__media-desktop">
+              {%- if block.settings.slide_link != blank -%}
+                <a href="{{ block.settings.slide_link }}" class="banner__link">
+              {%- endif -%}
               {%- if forloop.first -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: fetchpriority: fetch_priority }}
               {%- else -%}
                 {{ block.settings.image_mobile | image_url: width: 3840 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+              {%- if block.settings.slide_link != blank -%}
+                </a>
               {%- endif -%}
             </div>
           {%- endif -%}
@@ -250,92 +274,10 @@
           "info": "Optional - will use desktop image if not provided"
         },
         {
-          "type": "header",
-          "content": "Content"
-        },
-        {
-          "type": "checkbox",
-          "id": "hide_content",
-          "default": false,
-          "label": "Hide content overlay"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "heading",
-          "label": "Heading"
-        },
-        {
-          "type": "select",
-          "id": "heading_size",
-          "options": [
-            {
-              "value": "h2",
-              "label": "Small"
-            },
-            {
-              "value": "h1",
-              "label": "Medium"
-            },
-            {
-              "value": "h0",
-              "label": "Large"
-            }
-          ],
-          "default": "h1",
-          "label": "Heading Size"
-        },
-        {
-          "type": "inline_richtext",
-          "id": "text",
-          "label": "Text"
-        },
-        {
-          "type": "select",
-          "id": "text_style",
-          "options": [
-            {
-              "value": "body",
-              "label": "Body"
-            },
-            {
-              "value": "subtitle",
-              "label": "Subtitle"
-            }
-          ],
-          "default": "body",
-          "label": "Text Style"
-        },
-        {
-          "type": "text",
-          "id": "button_label_1",
-          "label": "Button 1 Label"
-        },
-        {
           "type": "url",
-          "id": "button_link_1",
-          "label": "Button 1 Link"
-        },
-        {
-          "type": "checkbox",
-          "id": "button_style_secondary_1",
-          "default": false,
-          "label": "Use secondary button style"
-        },
-        {
-          "type": "text",
-          "id": "button_label_2",
-          "label": "Button 2 Label"
-        },
-        {
-          "type": "url",
-          "id": "button_link_2",
-          "label": "Button 2 Link"
-        },
-        {
-          "type": "checkbox",
-          "id": "button_style_secondary_2",
-          "default": false,
-          "label": "Use secondary button style"
+          "id": "slide_link",
+          "label": "Slide Link",
+          "info": "Makes the entire slide image clickable"
         }
       ]
     }
