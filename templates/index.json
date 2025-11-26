@@ -17,17 +17,8 @@
           "settings": {
             "image_desktop": "shopify://shop_images/banner.jpg",
             "image_mobile": "shopify://shop_images/Finbar_Ussher_Blue_and_green_textured_background___BOLD_WEB_BANNER_FONT____LED_79ca7811-167e-4324-9caa-1a0605b154c1.jpg",
-            "hide_content": false,
-            "heading": "",
-            "heading_size": "h1",
-            "text": "",
-            "text_style": "body",
-            "button_label_1": "",
-            "button_link_1": "",
-            "button_style_secondary_1": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "link_desktop": "https://hydrocropshop.co.uk/products/omega-720w-plus-led?_pos=7&_sid=36fbccde4&_ss=r",
+            "link_mobile": "shopify://products/125w-blue-cfl-kit-cfl-bulb-euro-cfl-reflector"
           }
         }
       },
