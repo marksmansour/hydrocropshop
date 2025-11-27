@@ -16,6 +16,7 @@
           "type": "slide",
           "settings": {
             "image_desktop": "shopify://shop_images/LED_DESKTOP_36089ba5-756f-48ad-ab5e-67392abab720.jpg",
+            "image_mobile": "shopify://shop_images/LED_Mobile.jpg",
             "link_desktop": "",
             "link_mobile": ""
           }
