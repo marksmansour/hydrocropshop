@@ -12,6 +12,14 @@
     "image_banner_pgA6JL": {
       "type": "image-banner",
       "blocks": {
+        "slide_jfF9JE": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/LED_DESKTOP_36089ba5-756f-48ad-ab5e-67392abab720.jpg",
+            "link_desktop": "",
+            "link_mobile": ""
+          }
+        },
         "slide_39GACA": {
           "type": "slide",
           "settings": {
@@ -23,6 +31,7 @@
         }
       },
       "block_order": [
+        "slide_jfF9JE",
         "slide_39GACA"
       ],
       "name": "t:sections.image-banner.presets.name",
