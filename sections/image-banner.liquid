@@ -14,7 +14,8 @@
     id="Slider-{{ section.id }}"
     aria-live="polite"
     aria-atomic="true"
-    data-autoplay="false"
+    data-autoplay="true"
+    data-speed="4"
   >
     {%- for block in section.blocks -%}
       {%- liquid
@@ -207,6 +208,23 @@
 {%- if request.design_mode -%}
   <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
+
+<script>
+  (function() {
+    const slider = document.getElementById('Slider-{{ section.id }}');
+    if (!slider) return;
+
+    const slides = slider.querySelectorAll('.slideshow__slide');
+    if (slides.length <= 1) return;
+
+    let currentIndex = 0;
+
+    setInterval(function() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      slides[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    }, 4000);
+  })();
+</script>
 
 {% schema %}
 {
