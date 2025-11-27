@@ -12,6 +12,15 @@
     "image_banner_pgA6JL": {
       "type": "image-banner",
       "blocks": {
+        "slide_Mkh7EN": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/BLACK_FRIDAY.jpg",
+            "image_mobile": "shopify://shop_images/BLACK_MOBILE.jpg",
+            "link_desktop": "",
+            "link_mobile": ""
+          }
+        },
         "slide_jfF9JE": {
           "type": "slide",
           "settings": {
@@ -27,11 +36,12 @@
             "image_desktop": "shopify://shop_images/Banner_Athea_a6d8e2d3-8cea-4db7-a0c7-7d745c289125.jpg",
             "image_mobile": "shopify://shop_images/Athena_mobile_598a787c-357c-461e-9634-212365b07a65.jpg",
             "link_desktop": "https://hydrocropshop.co.uk/collections/nutrient-brands/athena",
-            "link_mobile": ""
+            "link_mobile": "https://hydrocropshop.co.uk/collections/nutrient-brands/athena"
           }
         }
       },
       "block_order": [
+        "slide_Mkh7EN",
         "slide_jfF9JE",
         "slide_39GACA"
       ],
