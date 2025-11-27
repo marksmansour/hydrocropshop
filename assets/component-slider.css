@@ -375,7 +375,7 @@ slider-component.slider-component-full-width {
 }
 
 .slider-button {
-  color: rgba(var(--color-foreground), 0.9);
+  color: rgba(255, 255, 255, 0.5);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -387,7 +387,7 @@ slider-component.slider-component-full-width {
 }
 
 .slider-button:not([disabled]):hover {
-  color: rgb(var(--color-foreground));
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .slider-button .icon {

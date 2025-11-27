@@ -634,7 +634,7 @@ slideshow-component .slider-buttons {
 .slideshow__arrow svg {
   width: 32px;
   height: 32px;
-  color: #000;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .slideshow__arrow--prev {
