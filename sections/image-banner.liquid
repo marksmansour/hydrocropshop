@@ -7,7 +7,7 @@
   role="region"
   aria-roledescription="Image carousel"
   aria-label="Image banner carousel"
-  style="display: block; padding: 4px 4px 0 4px;"
+  style="display: block;"
 >
   <div
     class="slideshow banner banner--adapt grid grid--1-col slider slider--everywhere"
@@ -218,10 +218,11 @@
     if (slides.length <= 1) return;
 
     let currentIndex = 0;
+    const slideWidth = slides[0].offsetWidth;
 
     setInterval(function() {
       currentIndex = (currentIndex + 1) % slides.length;
-      slides[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+      slider.scrollTo({ left: currentIndex * slideWidth, behavior: 'smooth' });
     }, 4000);
   })();
 </script>
